@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <Container version="2">
   <Name>ralph-agy</Name>
-  <Repository>ralph-agy</Repository>
-  <Registry></Registry>
+  <Repository>ghcr.io/zeyso/ralph-agy:main</Repository>
+  <Registry>https://ghcr.io</Registry>
   <Network>bridge</Network>
   <MyIP/>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support/>
-  <Project>https://github.com/snarktank/ralph</Project>
+  <Support>https://github.com/Zeyso/ralph-agy/issues</Support>
+  <Project>https://github.com/Zeyso/ralph-agy</Project>
   <Overview>Ralph autonomous AI agent loop running with Google Antigravity CLI (agy). Ralph repeatedly calls agy to implement user stories from a prd.json until all tasks are complete. Use "docker exec -it ralph-agy bash" to attach and run ralph.sh manually.</Overview>
   <Category>Tools:</Category>
   <WebUI/>
-  <TemplateURL/>
+  <TemplateURL>https://raw.githubusercontent.com/Zeyso/ralph-agy/main/templates/ralph-agy.xml</TemplateURL>
   <Icon>https://antigravity.google/favicon.ico</Icon>
   <ExtraParams>--restart=unless-stopped</ExtraParams>
   <PostArgs/>

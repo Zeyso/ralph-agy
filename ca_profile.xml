@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommunityApplications>
+  <Profile>
+    An autonomous AI agent loop running with Google Antigravity CLI (agy). Ralph repeatedly calls agy to implement user stories from a prd.json until all tasks are complete.
+  </Profile>
+  <Icon>https://antigravity.google/favicon.ico</Icon>
+  <WebPage>https://github.com/Zeyso/ralph-agy</WebPage>
+</CommunityApplications>
