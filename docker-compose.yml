@@ -13,24 +13,24 @@ services:
 
     environment:
       # Google Antigravity / Gemini API Key
-      # Set this in your local .env file or Unraid's template
+      # Set this in Unraid's template or via .env file
       - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
       - ANTIGRAVITY_API_KEY=${ANTIGRAVITY_API_KEY:-}
 
       # Optional: set default model
       # - AGY_MODEL=gemini-3.5-flash
 
-      - TZ=${TZ:-Europe/Berlin}
+      - TZ=Europe/Berlin
 
     volumes:
       # Your project/repo – this is where prd.json lives
-      - ./project:/workspace/project
+      - /mnt/user/appdata/ralph-agy/project:/workspace/project
 
       # agy config & credentials (settings.json, auth tokens)
-      - ./agy-config:/root/.config/agy
+      - /mnt/user/appdata/ralph-agy/agy-config:/root/.config/agy
 
       # Persistent logs / progress across container restarts
-      - ./logs:/workspace/logs
+      - /mnt/user/appdata/ralph-agy/logs:/workspace/logs
 
     # No ports needed – purely CLI tool
     # Remove the line below if you don't need it

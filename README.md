@@ -1,4 +1,4 @@
-# Ralph + agy Docker Setup
+# Ralph + agy Docker Setup für Unraid
 
 Ralph ist ein autonomer AI-Agent-Loop, der die Google Antigravity CLI (`agy`) nutzt, um User Stories aus einer `prd.json` automatisch zu implementieren.
 
@@ -24,75 +24,57 @@ ralph-agy/
 
 ---
 
-## Docker & Docker Compose Setup (empfohlen)
-
-Dieses Setup funktioniert auf jedem System (macOS, Linux, Windows), auf dem Docker installiert ist.
+## Unraid Setup (empfohlen)
 
 ### 1. Verzeichnisse anlegen
 
-Erstelle im Projektordner die Verzeichnisse, die für die persistente Speicherung benötigt werden:
-```bash
-mkdir -p project agy-config logs
-```
-
-### 2. Umgebungsvariablen konfigurieren
-
-Kopiere die `.env.example` Datei in eine `.env` Datei:
-```bash
-cp .env.example .env
-```
-Öffne die `.env` Datei und trage deinen `GOOGLE_API_KEY` ein.
-
-### 3. Container starten
-
-Du kannst das Image lokal bauen und starten:
-```bash
-docker compose up -d --build
-```
-Dies baut das Docker-Image und startet den Container im Hintergrund. Die Ordner `project`, `agy-config` und `logs` werden automatisch per relativem Pfad in den Container gemountet.
-
----
-
-## Unraid Setup (Alternativ)
-
-Für die Installation auf einem Unraid-Server:
-
-### 1. Verzeichnisse auf Unraid anlegen
-
-Im Unraid-Terminal:
+Im Unraid Terminal:
 ```bash
 mkdir -p /mnt/user/appdata/ralph-agy/agy-config
 mkdir -p /mnt/user/appdata/ralph-agy/project
 mkdir -p /mnt/user/appdata/ralph-agy/logs
 ```
 
-### 2. Image bauen
+### 2. Container in Unraid anlegen
 
-```bash
-# Diesen Ordner auf den Unraid-Server kopieren (z.B. nach /mnt/user/docker-builds/ralph-agy)
-cd /mnt/user/docker-builds/ralph-agy
-docker build -t ralph-agy .
-```
-
-### 3. Container in Unraid anlegen
-
-**Option A – über Community Applications / Unraid Template:**
-- Kopiere die `unraid-template.xml` in `/boot/config/plugins/dockerMan/templates-user/`
-- Im Unraid Docker-Tab → "Add Container" → Template "ralph-agy" wählen
+**Option A – über Community Applications (CA) / Unraid Template (Empfohlen):**
+- Die `unraid-template.xml` in `/boot/config/plugins/dockerMan/templates-user/` kopieren.
+- Im Unraid Docker-Tab → **"Add Container"** → Template **"ralph-agy"** wählen.
+- Trage deinen `GOOGLE_API_KEY` ein und passe ggf. die Pfade an.
 
 **Option B – manuell im Docker-Tab:**
-- Repository: `ralph-agy` (lokal gebautes Image)
-- Restart Policy: `unless-stopped`
-- Volumes (siehe unten)
-- Environment Variables (siehe unten)
+- **Name**: `ralph-agy`
+- **Repository**: `zeyso/ralph-agy`
+- **Restart Policy**: `unless-stopped`
+- **Volumes**:
+  - `/workspace/project` ➔ `/mnt/user/appdata/ralph-agy/project`
+  - `/root/.config/agy` ➔ `/mnt/user/appdata/ralph-agy/agy-config`
+  - `/workspace/logs` ➔ `/mnt/user/appdata/ralph-agy/logs`
+- **Umgebungsvariablen**:
+  - `GOOGLE_API_KEY`: Dein Google/Antigravity API-Key
+  - `TZ`: `Europe/Berlin`
 
-### 4. Volumes auf Unraid konfigurieren
+---
 
-| Container-Pfad         | Host-Pfad (Unraid)                                 | Beschreibung                    |
-|------------------------|-----------------------------------------------------|---------------------------------|
-| `/workspace/project`   | `/mnt/user/appdata/ralph-agy/project`              | Dein Git-Repo mit `prd.json`    |
-| `/root/.config/agy`    | `/mnt/user/appdata/ralph-agy/agy-config`           | agy-Konfiguration & Auth-Token  |
-| `/workspace/logs`      | `/mnt/user/appdata/ralph-agy/logs`                 | Persistente Logs                |
+## Docker Compose Setup (Alternativ)
+
+Dieses Setup funktioniert plattformunabhängig für lokale Entwicklung mit Docker Compose:
+
+### 1. Verzeichnisse lokal anlegen
+```bash
+mkdir -p project agy-config logs
+```
+
+### 2. Umgebungsvariablen
+```bash
+cp .env.example .env
+# GOOGLE_API_KEY in der .env eintragen
+```
+
+### 3. Container starten
+```bash
+docker compose up -d --build
+```
 
 ---
 
@@ -178,8 +160,8 @@ docker exec -it ralph-agy bash
 docker exec -it ralph-agy agy --version
 
 # Ralph-Status im Projekt prüfen
-cat ./project/progress.txt
-cat ./project/prd.json | jq '.userStories[] | {id, title, passes}'
+cat /mnt/user/appdata/ralph-agy/project/progress.txt
+cat /mnt/user/appdata/ralph-agy/project/prd.json | jq '.userStories[] | {id, title, passes}'
 ```
 
 ---

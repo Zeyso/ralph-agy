@@ -20,14 +20,14 @@ if [ -f /root/.config/agy/settings.json ]; then
     echo "✓ agy settings found"
 else
     echo "⚠ No agy settings.json detected at /root/.config/agy/settings.json"
-    echo "  Mount your config: -v \$(pwd)/agy-config:/root/.config/agy"
+    echo "  Mount your config: -v /mnt/user/appdata/ralph-agy/agy-config:/root/.config/agy"
 fi
 
 # Check for workspace/project
 if [ -d /workspace/project ]; then
     echo "✓ Project mounted at /workspace/project"
 else
-    echo "⚠ No project mounted. Mount your repo: -v \$(pwd)/project:/workspace/project"
+    echo "⚠ No project mounted. Mount your repo: -v /mnt/user/appdata/ralph-agy/project:/workspace/project"
 fi
 
 echo ""
