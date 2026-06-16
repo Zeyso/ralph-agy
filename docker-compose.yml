@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  ralph-agy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ralph-agy
+    hostname: ralph-agy
+
+    # Keep container running – attach with: docker exec -it ralph-agy bash
+    restart: unless-stopped
+
+    environment:
+      # Google Antigravity / Gemini API Key
+      # Set this in your local .env file or Unraid's template
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      - ANTIGRAVITY_API_KEY=${ANTIGRAVITY_API_KEY:-}
+
+      # Optional: set default model
+      # - AGY_MODEL=gemini-3.5-flash
+
+      - TZ=${TZ:-Europe/Berlin}
+
+    volumes:
+      # Your project/repo – this is where prd.json lives
+      - ./project:/workspace/project
+
+      # agy config & credentials (settings.json, auth tokens)
+      - ./agy-config:/root/.config/agy
+
+      # Persistent logs / progress across container restarts
+      - ./logs:/workspace/logs
+
+    # No ports needed – purely CLI tool
+    # Remove the line below if you don't need it
+    # ports: []
+
+    # Resource limits (optional – tune for your Unraid server)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "2"
+    #       memory: 2G

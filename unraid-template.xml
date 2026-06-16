@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>ralph-agy</Name>
+  <Repository>ralph-agy</Repository>
+  <Registry></Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support/>
+  <Project>https://github.com/snarktank/ralph</Project>
+  <Overview>Ralph autonomous AI agent loop running with Google Antigravity CLI (agy). Ralph repeatedly calls agy to implement user stories from a prd.json until all tasks are complete. Use "docker exec -it ralph-agy bash" to attach and run ralph.sh manually.</Overview>
+  <Category>Tools:</Category>
+  <WebUI/>
+  <TemplateURL/>
+  <Icon>https://antigravity.google/favicon.ico</Icon>
+  <ExtraParams>--restart=unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires/>
+
+  <!-- Google API Key for agy -->
+  <Config Name="Google API Key" Target="GOOGLE_API_KEY" Default="" Mode="" Description="Your Google / Antigravity API Key for agy CLI authentication" Type="Variable" Display="always" Required="true" Mask="true"></Config>
+
+  <!-- Optional: Antigravity-specific key if different -->
+  <Config Name="Antigravity API Key" Target="ANTIGRAVITY_API_KEY" Default="" Mode="" Description="Antigravity API Key (leave empty if using GOOGLE_API_KEY)" Type="Variable" Display="always" Required="false" Mask="true"></Config>
+
+  <!-- Timezone -->
+  <Config Name="Timezone" Target="TZ" Default="Europe/Berlin" Mode="" Description="Container timezone" Type="Variable" Display="advanced" Required="false" Mask="false">Europe/Berlin</Config>
+
+  <!-- Project volume: your git repo with prd.json -->
+  <Config Name="Project Path" Target="/workspace/project" Default="/mnt/user/appdata/ralph-agy/project" Mode="rw" Description="Path to your project/git repo (must contain prd.json)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ralph-agy/project</Config>
+
+  <!-- agy config: settings.json + auth tokens -->
+  <Config Name="agy Config Path" Target="/root/.config/agy" Default="/mnt/user/appdata/ralph-agy/agy-config" Mode="rw" Description="agy configuration directory (settings.json, auth tokens)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ralph-agy/agy-config</Config>
+
+  <!-- Logs -->
+  <Config Name="Logs Path" Target="/workspace/logs" Default="/mnt/user/appdata/ralph-agy/logs" Mode="rw" Description="Persistent log storage" Type="Path" Display="advanced" Required="false" Mask="false">/mnt/user/appdata/ralph-agy/logs</Config>
+
+</Container>

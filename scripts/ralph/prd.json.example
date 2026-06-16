@@ -1,0 +1,28 @@
+{
+  "branchName": "feature/beispiel-feature",
+  "userStories": [
+    {
+      "id": "1",
+      "title": "Beispiel: README erstellen",
+      "description": "Eine README.md Datei im Projekt anlegen mit Projektbeschreibung, Setup-Anleitung und Verwendungsbeispielen.",
+      "acceptanceCriteria": [
+        "README.md existiert im Projektstamm",
+        "Enthält Projektbeschreibung",
+        "Enthält Setup-Schritte",
+        "Enthält mindestens ein Verwendungsbeispiel"
+      ],
+      "passes": false
+    },
+    {
+      "id": "2",
+      "title": "Beispiel: .gitignore hinzufügen",
+      "description": "Eine .gitignore Datei für Node.js-Projekte hinzufügen.",
+      "acceptanceCriteria": [
+        ".gitignore existiert",
+        "node_modules ist ignoriert",
+        ".env ist ignoriert"
+      ],
+      "passes": false
+    }
+  ]
+}

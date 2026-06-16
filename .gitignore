@@ -1,0 +1,13 @@
+# Local data and agy config
+project/
+agy-config/
+logs/
+.env
+
+# Logs and runtime files
+*.log
+.last-branch
+
+# OS files
+.DS_Store
+Thumbs.db
